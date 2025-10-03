@@ -1,6 +1,6 @@
 const startingTimeMS = 5000
 const timerRefreshMS = 50;
-const timerLabels = ["Blocker 1", "Blocker 2", "Blocker 3", "Jammer", "Jammer", "Blocker 1", "Blocker 2", "Blocker 3"]
+const timerLabels = ["Blocker 1", "Blocker 2", "Blocker 3", "Jammer"]
 const timerIDs = new Set()
 const timersSet = new Set()
 
@@ -53,34 +53,23 @@ function formatTime (timeMS) {
     // return `${sign}${mins}:${secs}.${millis}\u2800`
 }
 //Fills the passed table with rows labled by the passed info
-function fillTable(table, labels) {
+function fillGrid(grid, labels) {
 
     //loops once for each item in the passed labels array
     for (let i = 0; i < labels.length; i++) {
 
         //create unique ID
-        id = `${i}:${timerLabels[i]}`
+        id = `${grid.id}-${timerLabels[i]}`
 
         //store ID in set
         timerIDs.add(id)
 
-        //creates a row for each label
-        let newrow = table.insertRow(table.rows.length)
-        //populates each row
-        fillTableRow(newrow, labels[i], id)
+        grid.innerHTML += `<p class="timerLbl">${timerLabels[i]}:</p>`
+        grid.innerHTML += `<button id="${id} Display" class="countDisplay" disabled="True">00:00.00</button>`
+        grid.innerHTML += `<button id="${id} Start" class="startBtn">${iconStart}</button>`
+        grid.innerHTML += `<button id="${id} Reset" class="resetBtn" disabled>${iconReset}</button>`
+
     }
-
-
-}
-
-//Adds data to the passed table row
-function fillTableRow(row, label, timerID) {
-
-    row.insertCell(0).innerHTML = `<p class="timerLbl">${label}:</p>`
-    row.insertCell(row.length).innerHTML = `<button id="${timerID} Display" class="countDisplay" disabled="True">00:00.00</button>`
-    row.insertCell(row.length).innerHTML = `<button id="${timerID} Start" class="startBtn">${iconStart}</button>`
-    row.insertCell(row.length).innerHTML = `<button id="${timerID} Reset" class="resetBtn" disabled>${iconReset}</button>`
-
 }
 
 function initialize() {
@@ -88,8 +77,9 @@ function initialize() {
     //removes html that calls initalizer
     document.getElementById("init1").remove()
 
-    //fills table of timers
-    fillTable(document.getElementById("timersTable"), timerLabels)
+    //fills in timer elements
+    fillGrid(document.getElementById("team1"), timerLabels)
+    fillGrid(document.getElementById("team2"), timerLabels)
 
     //creates a timer for each item in the table
     for(const i of timerIDs) {

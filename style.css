@@ -38,6 +38,13 @@ button {
     'opsz' 40
 }
 
+.flexg {
+    display: grid;
+    place-items: center;
+    grid-template-columns: max-content max-content max-content max-content;
+    margin-inline: auto;
+}
+
 .flexb {
     display: flex;
     border: 5px;
@@ -91,9 +98,4 @@ button:disabled.resetBtn {
 .timerLbl {
     font-size: 100%;
     min-width: 68px;
-}
-
-.fbox {
-    display: grid;
-    grid-template-columns: auto auto auto auto;
 }
