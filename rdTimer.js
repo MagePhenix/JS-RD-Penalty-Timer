@@ -4,7 +4,7 @@ const timerLabels = ["Blocker 1", "Blocker 2", "Blocker 3", "Jammer", "Jammer", 
 const timerIDs = new Set()
 const timersSet = new Set()
 
-const iconPlay = '<span class="material-symbols-outlined">play_circle</span>'
+const iconStart = '<span class="material-symbols-outlined">play_circle</span>'
 const iconPause = '<span class="material-symbols-outlined">pause_circle</span>'
 const iconReset = '<span class="material-symbols-outlined">replay_30</span>'
 
@@ -77,7 +77,7 @@ function fillTableRow(row, label, timerID) {
 
     row.insertCell(0).innerHTML = `<p>${label}:</p>`
     row.insertCell(row.length).innerHTML = `<button id="${timerID} Display" class="countDisplay">00:00.00</button>`
-    row.insertCell(row.length).innerHTML = `<button id="${timerID} Start" class="startBtn">${iconPlay}</button>`
+    row.insertCell(row.length).innerHTML = `<button id="${timerID} Start" class="startBtn">${iconStart}</button>`
     row.insertCell(row.length).innerHTML = `<button id="${timerID} Reset" class="resetBtn" disabled>${iconReset}</button>`
 
 }
@@ -178,7 +178,7 @@ class Timer {
             //update state
             this.state = "paused"
 
-            this.startBtn.innerHTML = iconPlay
+            this.startBtn.innerHTML = iconStart
         }
     }
 
@@ -198,7 +198,7 @@ class Timer {
             //update state
             this.state = "reset"
 
-            this.startBtn.innerHTML = iconPlay
+            this.startBtn.innerHTML = iconStart
             this.resetBtn.disabled = true
         }
     }

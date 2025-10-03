@@ -1,19 +1,27 @@
-body{
-    background: black;
-    color: white;
+:root {
+    --bgColor: black;
+    --fgColor: white;
+    --startColor: rgb(56, 152, 56);
+    --pauseColor: rgb(255, 216, 91);
+    --resetColor: rgb(215, 47, 47);
+
+    --textNorm: 100%;
 }
 
-button{
-    color: white;
-    background-color: rgb(56, 56, 56);
+body {
+    background: var(--bgColor);
+    color: var(--fgColor);
+}
+
+button {
+    color: var((var(--fgColor)));
     padding: 2px;
-    border-color: rgb(73, 73, 73);
     border-radius: 10px;
     font-weight: 200;
-    font-size: 100%;
+    font-size: var(--textNorm);
     height: 50px;
     width: 50px;
-    margin: 3px;
+    margin-inline: 5px;
 }
 
 .material-symbols-outlined {
@@ -30,6 +38,8 @@ button{
     display: flex;
     border: 5px;
     border-radius: 5px;
+    margin-inline: auto;
+    max-width: fit-content;
 }
 
 .countDisplay {
@@ -38,7 +48,7 @@ button{
     width: 180px;
     height: 45px;
     padding: 5px;
-    margin: 8px;
+    margin: 5px 8px 5px 8px;
     border: none;
     border-radius: 20px;
     font-family: "Source Code Pro", monospace;
@@ -47,19 +57,29 @@ button{
 }
 
 .startBtn {
-    color: rgb(71, 133, 71);
+    color: var(--startColor);
     background-color: black;
-    border-color: rgb(71, 133, 71);
+    border-color: var(--startColor);
 }
 
-.playBtn {
-    color: yellow;
+.pauseBtn {
+    color: var(--pauseColor);
     background-color: black;
-    border-color: yellow;
+    border-color: var(--pauseColor);
 }
 
 .resetBtn {
-    color: rgb(255, 102, 102);
+    color: var(--resetColor);
     background-color: black;
-    border-color: rgb(255, 102, 102);
+    border-color: var(--resetColor);
+}
+
+button:disabled.resetBtn {
+    color: rgb(70, 70, 70);
+    background-color: black;
+    border-color: rgb(70, 70, 70);
+}
+
+.timerTable {
+    margin-inline: auto;
 }
