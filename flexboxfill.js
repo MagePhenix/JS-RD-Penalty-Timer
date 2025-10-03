@@ -19,11 +19,6 @@ function getTimeMS () {
     return new Date().getTime()
 }
 
-//Prevents devices from sleeping
-async function getWakeLock() {
-    return await navigator.wakeLock.request("screen")
-}
-
 //Takes a time in MS and returns a string in the format ##:##.## example 01:23.45
 function formatTime (timeMS) {
 
@@ -64,10 +59,12 @@ function fillTable(table, labels) {
         //store ID in set
         timerIDs.add(id)
 
-        //creates a row for each label
-        let newrow = table.insertRow(table.rows.length)
-        //populates each row
-        fillTableRow(newrow, labels[i], id)
+        table.innerHTML += `<p class="timerLbl">${timerLabels[i]}:</p>`
+        table.innerHTML += `<button id="${id} Display" class="countDisplay" disabled="True">00:00.00</button>`
+        table.innerHTML += `<button id="${id} Start" class="startBtn">${iconStart}</button>`
+        table.innerHTML += `<button id="${id} Reset" class="resetBtn" disabled>${iconReset}</button>`
+
+
     }
 
 
@@ -85,30 +82,13 @@ function fillTableRow(row, label, timerID) {
 
 function initialize() {
 
-    //removes html that calls initalizer
-    document.getElementById("init1").remove()
-
     //fills table of timers
-    fillTable(document.getElementById("timersTable"), timerLabels)
+    fillTable(document.getElementById("test"), timerLabels)
 
     //creates a timer for each item in the table
     for(const i of timerIDs) {
         timersSet.add(new Timer(i))
     }
-
-    //adds icons to custom buttons
-    document.getElementById("resumeAll").innerHTML = iconResumeAll
-    document.getElementById("pauseAll").innerHTML = iconPauseAll
-    document.getElementById("resetAll").innerHTML = iconResetAll
-
-    //sets up listeners on extra buttons
-    document.getElementById("resumeAll").addEventListener("click", resumeAll)
-    document.getElementById("pauseAll").addEventListener("click", pauseAll)
-    document.getElementById("resetAll").addEventListener("click", resetAll)
-
-    //sets screen to stay on
-    getWakeLock()
-
 }
 
 //handles timer management
@@ -238,4 +218,4 @@ function resetAll () {
     }
 }
 
-// initialize()
+initialize()

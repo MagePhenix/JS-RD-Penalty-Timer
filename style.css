@@ -13,15 +13,19 @@ body {
     color: var(--fgColor);
 }
 
+table tbody th td {
+    padding: 0px;
+}
+
 button {
     color: var((var(--fgColor)));
-    padding: 2px;
     border-radius: 10px;
     font-weight: 200;
     font-size: var(--textNorm);
     height: 50px;
     width: 50px;
-    margin-inline: 5px;
+    /* margin-inline: clamp(3px, 15vw, 10px); */
+    padding-top: 4px;
 }
 
 .material-symbols-outlined {
@@ -43,13 +47,12 @@ button {
 }
 
 .countDisplay {
-    color: white;
-    background: rgb(40, 40, 40);
-    width: 180px;
+    color: var(--fgColor);
+    border-color: var(--fgColor);
+    background-color: var(--bgColor);
+    width: clamp(7.5rem, 30vw, 12rem);
     height: 45px;
     padding: 5px;
-    margin: 5px 8px 5px 8px;
-    border: none;
     border-radius: 20px;
     font-family: "Source Code Pro", monospace;
     font-weight: 100;
@@ -82,4 +85,15 @@ button:disabled.resetBtn {
 
 .timerTable {
     margin-inline: auto;
+    max-width: fit-content;
+}
+
+.timerLbl {
+    font-size: 100%;
+    min-width: 68px;
+}
+
+.fbox {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
 }
