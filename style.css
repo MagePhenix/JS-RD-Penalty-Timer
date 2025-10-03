@@ -24,8 +24,8 @@ button {
     font-size: var(--textNorm);
     height: 50px;
     width: 50px;
-    /* margin-inline: clamp(3px, 15vw, 10px); */
     padding-top: 4px;
+    margin: min(.5vw, 3px);
 }
 
 .material-symbols-outlined {
@@ -39,10 +39,13 @@ button {
 }
 
 .flexg {
+    background-color: red;
     display: grid;
     place-items: center;
-    grid-template-columns: max-content max-content max-content max-content;
+    grid-template-columns: max-content auto max-content max-content;
     margin-inline: auto;
+    min-width: fit-content;
+    max-width: 450px;
 }
 
 .flexb {
@@ -57,9 +60,13 @@ button {
     color: var(--fgColor);
     border-color: var(--fgColor);
     background-color: var(--bgColor);
-    width: clamp(7.5rem, 30vw, 12rem);
+    /* width: clamp(7.5rem, 30vw, 12rem); */
+    min-width: 7.5rem;
+    /* max-width: 12rem; */
+    width: auto;
     height: 45px;
     padding: 5px;
+    margin: 0px;
     border-radius: 20px;
     font-family: "Source Code Pro", monospace;
     font-weight: 100;

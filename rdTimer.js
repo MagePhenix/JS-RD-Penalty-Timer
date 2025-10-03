@@ -37,13 +37,6 @@ function formatTime (timeMS) {
     let mins = Math.floor(timeMS / 60000)
     let secs = Math.floor((timeMS % 60000) / 1000)
     let millis = Math.floor((timeMS % 1000) / 10)
-    
-    //corrects the values when the timer runs over
-    // if (timeMS < 0) {
-    //     mins++
-    //     secs++
-    //     millis++
-    // }
 
     mins = String(mins).padStart(2,'0')
     secs = String(secs).padStart(2, '0')
@@ -64,6 +57,7 @@ function fillGrid(grid, labels) {
         //store ID in set
         timerIDs.add(id)
 
+        //creates all the elements
         grid.innerHTML += `<p class="timerLbl">${timerLabels[i]}:</p>`
         grid.innerHTML += `<button id="${id} Display" class="countDisplay" disabled="True">00:00.00</button>`
         grid.innerHTML += `<button id="${id} Start" class="startBtn">${iconStart}</button>`
@@ -227,5 +221,3 @@ function resetAll () {
         i.resetTimer()
     }
 }
-
-// initialize()
