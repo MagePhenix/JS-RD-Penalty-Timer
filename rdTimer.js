@@ -4,6 +4,16 @@ const timerLabels = ["Blocker 1", "Blocker 2", "Blocker 3", "Jammer", "Jammer", 
 const timerIDs = new Set()
 const timersSet = new Set()
 
+const iconPlay = '<span class="material-symbols-outlined">play_circle</span>'
+const iconPause = '<span class="material-symbols-outlined">pause_circle</span>'
+const iconReset = '<span class="material-symbols-outlined">replay_30</span>'
+
+const iconResetAll = `<span class="material-symbols-outlined">restart_alt</span>`
+const iconResumeAll = `<span class="material-symbols-outlined">resume</span>`
+const iconPauseAll = `<span class="material-symbols-outlined">pause</span>`
+
+
+
 //Returns the current time in MS
 function getTimeMS () {
     return new Date().getTime()
@@ -17,7 +27,7 @@ async function getWakeLock() {
 //Takes a time in MS and returns a string in the format ##:##.## example 01:23.45
 function formatTime (timeMS) {
 
-    let sign = " "
+    let sign = "\u2800"
 
     if (timeMS < 0) {
         sign = "-"
@@ -39,7 +49,7 @@ function formatTime (timeMS) {
     secs = String(secs).padStart(2, '0')
     millis = String(millis).padStart(2, '0')
     
-    return `${sign} ${mins}:${secs}.${millis}`
+    return `${sign}${mins}:${secs}.${millis}\u2800`
 }
 //Fills the passed table with rows labled by the passed info
 function fillTable(table, labels) {
@@ -67,8 +77,8 @@ function fillTableRow(row, label, timerID) {
 
     row.insertCell(0).innerHTML = `<p>${label}:</p>`
     row.insertCell(row.length).innerHTML = `<button id="${timerID} Display" class="countDisplay">00:00.00</button>`
-    row.insertCell(row.length).innerHTML = `<button id="${timerID} Start" class="startBtn"><span class="material-symbols-rounded">play_arrow</span></button>`
-    row.insertCell(row.length).innerHTML = `<button id="${timerID} Reset" class="resetBtn" disabled><span class="material-symbols-rounded">replay</span></button>`
+    row.insertCell(row.length).innerHTML = `<button id="${timerID} Start" class="startBtn">${iconPlay}</button>`
+    row.insertCell(row.length).innerHTML = `<button id="${timerID} Reset" class="resetBtn" disabled>${iconReset}</button>`
 
 }
 
@@ -84,6 +94,11 @@ function initialize() {
     for(const i of timerIDs) {
         timersSet.add(new Timer(i))
     }
+
+    //adds icons to custom buttons
+    document.getElementById("resumeAll").innerHTML = iconResumeAll
+    document.getElementById("pauseAll").innerHTML = iconPauseAll
+    document.getElementById("resetAll").innerHTML = iconResetAll
 
     //sets up listeners on extra buttons
     document.getElementById("resumeAll").addEventListener("click", resumeAll)
@@ -145,7 +160,7 @@ class Timer {
             this.state = "running"
 
             //Updates Visuals
-            this.startBtn.innerHTML = `<span class="material-symbols-rounded">pause</span>`
+            this.startBtn.innerHTML = iconPause
             this.resetBtn.disabled = false
         }
     }
@@ -163,7 +178,7 @@ class Timer {
             //update state
             this.state = "paused"
 
-            this.startBtn.innerHTML = '<span class="material-symbols-rounded">play_arrow</span>'
+            this.startBtn.innerHTML = iconPlay
         }
     }
 
@@ -183,7 +198,7 @@ class Timer {
             //update state
             this.state = "reset"
 
-            this.startBtn.innerHTML = '<span class="material-symbols-rounded">play_arrow</span>'
+            this.startBtn.innerHTML = iconPlay
             this.resetBtn.disabled = true
         }
     }
