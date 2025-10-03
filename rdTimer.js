@@ -1,4 +1,4 @@
-const startingTimeMS = 30000
+const startingTimeMS = 5000
 const timerRefreshMS = 50;
 const timerLabels = ["Blocker 1", "Blocker 2", "Blocker 3", "Jammer", "Jammer", "Blocker 1", "Blocker 2", "Blocker 3"]
 const timerIDs = new Set()
@@ -16,22 +16,30 @@ async function getWakeLock() {
 
 //Takes a time in MS and returns a string in the format ##:##.## example 01:23.45
 function formatTime (timeMS) {
+
+    let sign = " "
+
+    if (timeMS < 0) {
+        sign = "-"
+        timeMS = Math.abs(timeMS)
+    }
+
     let mins = Math.floor(timeMS / 60000)
     let secs = Math.floor((timeMS % 60000) / 1000)
     let millis = Math.floor((timeMS % 1000) / 10)
     
     //corrects the values when the timer runs over
-    if (timeMS < 0) {
-        mins++
-        secs++
-        millis++
-    }
+    // if (timeMS < 0) {
+    //     mins++
+    //     secs++
+    //     millis++
+    // }
 
     mins = String(mins).padStart(2,'0')
     secs = String(secs).padStart(2, '0')
     millis = String(millis).padStart(2, '0')
     
-    return `${mins}:${secs}.${millis}`
+    return `${sign} ${mins}:${secs}.${millis}`
 }
 //Fills the passed table with rows labled by the passed info
 function fillTable(table, labels) {
