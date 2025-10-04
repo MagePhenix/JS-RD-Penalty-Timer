@@ -192,6 +192,9 @@ class Timer {
             //update state
             this.state = "reset"
 
+            //enable startBtn
+            this.startBtn.disabled = false
+
             //update visuals
             this.timerDisplay.className = 'countDisplay'
             this.startBtn.className = 'startBtn'
@@ -201,14 +204,27 @@ class Timer {
     }
 
     updateDisplay = () => {
-        this.timerDisplay.textContent = formatTime(this.timeRemainingMS)
 
-        if (this.timeRemainingMS < 0) {
+        //if time is done
+        if (this.timeRemainingMS <= 0) {
+            //change styling
             this.timerDisplay.classList.add('overTime')
+
+            //stop updates
+            this.manager.removeRunning(this)
+
+            //set remaining time to 0
+            this.timeRemainingMS = 0
+
+            //disable playpause
+            this.startBtn.disabled = true
         }
         else if (this.timeRemainingMS < 11000) {
             this.timerDisplay.classList.add('standTime')
         }
+
+        //update the text shown based on timeRemaining
+        this.timerDisplay.textContent = formatTime(this.timeRemainingMS)
     }
 
     updateTimer = () => {

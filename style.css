@@ -121,7 +121,7 @@ button {
     border-color: var(--fgColor);
 }
 
-button:disabled.resetBtn {
+button:disabled.resetBtn, button:disabled{
     color: rgb(70, 70, 70);
     background-color: black;
     border-color: rgb(70, 70, 70);
@@ -135,4 +135,16 @@ button:disabled.resetBtn {
 .timerLbl {
     font-size: 100%;
     min-width: 68px;
+}
+
+#resumeAll {
+    border-color: var(--startColor);
+}
+
+#pauseAll {
+    border-color: var(--pauseColor);
+}
+
+#resetAll {
+    border-color: var(--resetColor);
 }
