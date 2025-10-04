@@ -150,6 +150,7 @@ class Timer {
 
             //Updates Visuals
             this.startBtn.innerHTML = iconPause
+            this.startBtn.className = 'pauseBtn'
             this.resetBtn.disabled = false
         }
     }
@@ -167,6 +168,7 @@ class Timer {
             //update state
             this.state = "paused"
 
+            //update visuals
             this.startBtn.innerHTML = iconStart
         }
     }
@@ -187,6 +189,8 @@ class Timer {
             //update state
             this.state = "reset"
 
+            //update visuals
+            this.startBtn.className = 'startBtn'
             this.startBtn.innerHTML = iconStart
             this.resetBtn.disabled = true
         }
