@@ -1,4 +1,4 @@
-const startingTimeMS = 15000
+const startingTimeMS = 30000
 const timerRefreshMS = 50;
 const timerLabels = ["Jammer", "Blocker 1", "Blocker 2", "Blocker 3"]
 const timerIDs = new Set()
