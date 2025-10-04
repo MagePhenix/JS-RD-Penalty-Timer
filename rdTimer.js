@@ -1,6 +1,6 @@
-const startingTimeMS = 30000
+const startingTimeMS = 15000
 const timerRefreshMS = 50;
-const timerLabels = ["Blocker 1", "Blocker 2", "Blocker 3", "Jammer"]
+const timerLabels = ["Jammer", "Blocker 1", "Blocker 2", "Blocker 3"]
 const timerIDs = new Set()
 const timersSet = new Set()
 
@@ -152,6 +152,8 @@ class Timer {
             this.startBtn.innerHTML = iconPause
             this.startBtn.className = 'pauseBtn'
             this.resetBtn.disabled = false
+            this.timerDisplay.classList.remove('paused')
+            this.timerDisplay.classList.add('running')
         }
     }
 
@@ -170,6 +172,7 @@ class Timer {
 
             //update visuals
             this.startBtn.innerHTML = iconStart
+            this.timerDisplay.classList.add('paused')
         }
     }
 
@@ -190,6 +193,7 @@ class Timer {
             this.state = "reset"
 
             //update visuals
+            this.timerDisplay.className = 'countDisplay'
             this.startBtn.className = 'startBtn'
             this.startBtn.innerHTML = iconStart
             this.resetBtn.disabled = true
@@ -198,6 +202,13 @@ class Timer {
 
     updateDisplay = () => {
         this.timerDisplay.textContent = formatTime(this.timeRemainingMS)
+
+        if (this.timeRemainingMS < 0) {
+            this.timerDisplay.classList.add('overTime')
+        }
+        else if (this.timeRemainingMS < 11000) {
+            this.timerDisplay.classList.add('standTime')
+        }
     }
 
     updateTimer = () => {

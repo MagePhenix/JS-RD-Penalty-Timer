@@ -1,10 +1,13 @@
 :root {
     --bgColor: black;
-    --fgColor: white;
+    --fgColor: rgb(204, 204, 204);
     --startColor: rgb(56, 152, 56);
     --pauseColor: rgb(255, 216, 91);
     --resetColor: rgb(215, 47, 47);
+    --resetDisplayColor: rgb(100, 100, 100);
+    --standTimeColor: rgb(50, 255, 193);
 
+    --textColor: white;
     --textNorm: 100%;
 }
 
@@ -68,8 +71,8 @@ button {
 }
 
 .countDisplay {
-    color: var(--fgColor);
-    border-color: var(--fgColor);
+    color: var(--resetDisplayColor);
+    border-color: var(--resetDisplayColor);
     background-color: var(--bgColor);
     /* width: clamp(7.5rem, 30vw, 12rem); */
     width: 100%;
@@ -83,22 +86,39 @@ button {
     padding-top: 1px;
 }
 
+.countDisplay.running {
+    color: var(--fgColor);
+    border-color: var(--fgColor);
+}
+
+.countDisplay.standTime {
+    color: var(--standTimeColor);
+}
+
+.countDisplay.paused, .countDisplay.standTime.paused {
+    color: var(--pauseColor);
+}
+
+.countDisplay.overTime {
+    color: var(--resetColor);
+}
+
 .startBtn {
     color: var(--startColor);
     background-color: black;
-    border-color: var(--startColor);
+    border-color: var(--fgColor);
 }
 
 .pauseBtn {
     color: var(--pauseColor);
     background-color: black;
-    border-color: var(--pauseColor);
+    border-color: var(--fgColor);
 }
 
 .resetBtn {
     color: var(--resetColor);
     background-color: black;
-    border-color: var(--resetColor);
+    border-color: var(--fgColor);
 }
 
 button:disabled.resetBtn {
