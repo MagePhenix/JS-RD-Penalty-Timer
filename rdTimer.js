@@ -1,5 +1,5 @@
 const startingTimeMS = 30000
-const timerRefreshMS = 90;
+const timerRefreshMS = 50;
 const timerLabels = ["Blocker 1", "Blocker 2", "Blocker 3", "Jammer"]
 const timerIDs = new Set()
 const timersSet = new Set()
@@ -75,9 +75,12 @@ function initialize() {
     fillGrid(document.getElementById("team1"), timerLabels)
     fillGrid(document.getElementById("team2"), timerLabels)
 
+    //creates the timer manager
+    timerController = new timerManager()
+
     //creates a timer for each item in the table
     for(const i of timerIDs) {
-        timersSet.add(new Timer(i))
+        timersSet.add(new Timer(i , timerController))
     }
 
     //adds icons to custom buttons
@@ -86,9 +89,9 @@ function initialize() {
     document.getElementById("resetAll").innerHTML = iconResetAll
 
     //sets up listeners on extra buttons
-    document.getElementById("resumeAll").addEventListener("click", resumeAll)
-    document.getElementById("pauseAll").addEventListener("click", pauseAll)
-    document.getElementById("resetAll").addEventListener("click", resetAll)
+    document.getElementById("resumeAll").addEventListener("click", timerController.resumeAll)
+    document.getElementById("pauseAll").addEventListener("click", timerController.pauseAll)
+    document.getElementById("resetAll").addEventListener("click", timerController.resetAll)
 
     //sets screen to stay on
     getWakeLock()
@@ -97,11 +100,12 @@ function initialize() {
 
 //handles timer management
 class Timer {
-    constructor(timerID) {
+    constructor(timerID, manager) {
         this.timerInterval
         this.timeRemainingMS = startingTimeMS
         this.endTime
         this.state = "reset"
+        this.manager = manager
 
         this.timerDisplay = document.getElementById(`${timerID} Display`)
         this.startBtn = document.getElementById(`${timerID} Start`)
@@ -138,8 +142,8 @@ class Timer {
             //Stores the time that the timer should end
             this.endTime = getTimeMS() + this.timeRemainingMS
 
-            //creates an interval that will call updateTimer every refresh MS
-            this.timerInterval = setInterval (this.updateTimer, timerRefreshMS)
+            //adds timer to refresh cycle
+            this.manager.addRunning(this)
 
             //Update state
             this.state = "running"
@@ -154,8 +158,8 @@ class Timer {
         //while the timer is running
         if (this.state === "running") {
             
-            //stop updater
-            clearInterval(this.timerInterval)
+            //remove from refresher
+            this.manager.removeRunning(this)
 
             //run a final update
             this.updateTimer()
@@ -171,8 +175,8 @@ class Timer {
         //when the timer hasn't been reset already
         if (this.state !== "reset") {
 
-            //stop updater
-            clearInterval(this.timerInterval)
+            //remove from refresher
+            this.manager.removeRunning(this)
 
             //reset time to startingMS
             this.timeRemainingMS = startingTimeMS
@@ -203,54 +207,95 @@ class timerManager {
     constructor () {
         this.runningTimers = new Set()
         this.pausedTimers = new Set()
-        this.timerInterval
+        this.timerInterval = null
     }
 
     updateAll = () => {
+
+        //loops over all running timers
+        for (const i of this.runningTimers) {
+            //updates running timers
+            i.updateTimer()
+        }
 
     }
 
     addRunning = (timer) => {
 
+        //creates a refresh interval if none is currently running
+        if (this.runningTimers.size == 0) {
+            this.timerInterval = setInterval (this.updateAll, timerRefreshMS)
+        }
+
+        //adds timer to the update set
+        this.runningTimers.add(timer)
     }
 
     removeRunning = (timer) => {
 
+        //removes timer from the update set 
+        this.runningTimers.delete(timer)
+        
+        //checks if set is empty
+        if (this.runningTimers.size == 0) {
+            //stops updater if so
+            clearInterval(this.timerInterval)
+        }
     }
 
     pauseAll = () => {
 
+        //calls pause for all running timers
+        for (const i of this.runningTimers) {
+            i.pauseTimer()
+        }
     }
 
     resumeAll = () => {
 
+        //for every timer
+        for (const i of timersSet) {
+            
+            //if its paused
+            if (i.state === 'paused') {
+                
+                //restart it
+                i.startTimer()
+            }
+        }
     }
 
     resetAll = () => {
 
-    }
-}
-
-//pauses all timers that are currently running
-function pauseAll () {
-    for (const i of timersSet) {
-        i.pauseTimer()
-    }
-}
-
-//resumes all paused timers
-function resumeAll () {
-    for (const i of timersSet) {
-        if (i.state === "paused") {
-            i.startTimer()
+        //for every timer
+        for (const i of timersSet) {
+            
+            //reset it
+            i.resetTimer()
         }
     }
 }
 
-//resets all timers
-function resetAll () {
-    for (const i of timersSet) {
-        i.resetTimer()
-    }
-}
+// //pauses all timers that are currently running
+// function pauseAll () {
+//     for (const i of timersSet) {
+//         i.pauseTimer()
+//     }
+// }
+
+// //resumes all paused timers
+// function resumeAll () {
+//     for (const i of timersSet) {
+//         if (i.state === "paused") {
+//             i.startTimer()
+//         }
+//     }
+// }
+
+// //resets all timers
+// function resetAll () {
+//     for (const i of timersSet) {
+//         i.resetTimer()
+//     }
+// }
 
