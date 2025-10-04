@@ -156,7 +156,7 @@ button:disabled.resetBtn, button:disabled{
 }
 
 #settingsMenu {
-    display: none;
+    display: flex;
     border: 3px white solid;
     background-color: rgba(255, 255, 255, 0.80);
     border-radius: 15px;
@@ -186,7 +186,7 @@ button:disabled.resetBtn, button:disabled{
 
     /* border: 5px red solid; */
 
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: flex-start;
     
