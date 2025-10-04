@@ -11,6 +11,8 @@
 body {
     background: var(--bgColor);
     color: var(--fgColor);
+    min-height: fit-content;
+    min-width: fit-content;
 }
 
 table tbody th td {
@@ -43,19 +45,21 @@ button {
     place-items: center;
     grid-template-columns: auto minmax(7.5rem, 12rem) max-content max-content;
     column-gap: min(1rem, 2vw);
-    row-gap: min(1rem, 2vh);
+    row-gap: .5rem;
     margin-inline: auto;
-    margin-bottom: min(1rem, 2vh);
+    margin-bottom: .5rem;
     min-width: fit-content;
     max-width: fit-content;
+    height: 40vh;
 }
 
 .flexb {
     display: flex;
-    border: 5px;
-    border-radius: 5px;
+    border: 1px white solid;
+    /* border-radius: 5px; */
     margin-inline: auto;
-    max-width: fit-content;
+    max-width: clamp(200px, 80vw, 500px);
+    justify-content: space-evenly;
 }
 
 .countDisplay {
