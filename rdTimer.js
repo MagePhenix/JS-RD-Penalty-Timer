@@ -1,5 +1,5 @@
-const startingTimeMS = 5000
-const timerRefreshMS = 50;
+const startingTimeMS = 30000
+const timerRefreshMS = 90;
 const timerLabels = ["Blocker 1", "Blocker 2", "Blocker 3", "Jammer"]
 const timerIDs = new Set()
 const timersSet = new Set()
@@ -199,6 +199,38 @@ class Timer {
 
 }
 
+class timerManager {
+    constructor () {
+        this.runningTimers = new Set()
+        this.pausedTimers = new Set()
+        this.timerInterval
+    }
+
+    updateAll = () => {
+
+    }
+
+    addRunning = (timer) => {
+
+    }
+
+    removeRunning = (timer) => {
+
+    }
+
+    pauseAll = () => {
+
+    }
+
+    resumeAll = () => {
+
+    }
+
+    resetAll = () => {
+
+    }
+}
+
 //pauses all timers that are currently running
 function pauseAll () {
     for (const i of timersSet) {
@@ -221,3 +253,4 @@ function resetAll () {
         i.resetTimer()
     }
 }
+
