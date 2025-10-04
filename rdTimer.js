@@ -12,6 +12,7 @@ const iconResetAll = `<span class="material-symbols-outlined">restart_alt</span>
 const iconResumeAll = `<span class="material-symbols-outlined">resume</span>`
 const iconPauseAll = `<span class="material-symbols-outlined">pause</span>`
 
+const iconSettings = `<span class="material-symbols-outlined">settings</span>`
 
 
 //Returns the current time in MS
@@ -87,6 +88,7 @@ function initialize() {
     document.getElementById("resumeAll").innerHTML = iconResumeAll
     document.getElementById("pauseAll").innerHTML = iconPauseAll
     document.getElementById("resetAll").innerHTML = iconResetAll
+    document.getElementById("settingsBtn").innerHTML = iconSettings
 
     //sets up listeners on extra buttons
     document.getElementById("resumeAll").addEventListener("click", timerController.resumeAll)
@@ -209,6 +211,9 @@ class Timer {
         if (this.timeRemainingMS <= 0) {
             //change styling
             this.timerDisplay.classList.add('overTime')
+
+            //update state
+            this.state = 'overTime'
 
             //stop updates
             this.manager.removeRunning(this)
