@@ -162,9 +162,9 @@ button:disabled.resetBtn, button:disabled{
     border-radius: 15px;
     max-width: min(80vw, 400px);
     min-width: clamp(250px, 80vw, 400px);
-    min-height: 450px;
+    min-height: 490px;
     max-height: 620px;
-    height: 70vh;
+    height: 75vh;
     padding: 15px;
 
     flex-direction: column;
@@ -184,7 +184,7 @@ button:disabled.resetBtn, button:disabled{
     height: 100vh;
     max-height: 900px;
     margin: 0;
-    padding: 10%;
+    padding: 20px 10vw 10vh 10vw;
     box-sizing: border-box;
 
     /* border: 5px red solid; */

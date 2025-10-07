@@ -69,6 +69,8 @@ function fillGrid(grid, labels) {
 
 //Opens and closes the settings menu
 function toggleSettings() {
+
+    
     menu = document.getElementById("centerer")
 
     if (menu.style.visibility === "visible") {
