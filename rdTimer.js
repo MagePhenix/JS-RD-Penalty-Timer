@@ -67,6 +67,18 @@ function fillGrid(grid, labels) {
     }
 }
 
+//Opens and closes the settings menu
+function toggleSettings() {
+    menu = document.getElementById("centerer")
+
+    if (menu.style.visibility === "visible") {
+        menu.style.visibility = "hidden"
+    }
+    else {
+        menu.style.visibility = "visible"
+    }
+}
+
 function initialize() {
 
     //removes html that calls initalizer
@@ -94,6 +106,7 @@ function initialize() {
     document.getElementById("resumeAll").addEventListener("click", timerController.resumeAll)
     document.getElementById("pauseAll").addEventListener("click", timerController.pauseAll)
     document.getElementById("resetAll").addEventListener("click", timerController.resetAll)
+    document.getElementById("settingsBtn").addEventListener("click", toggleSettings)
 
     //sets screen to stay on
     getWakeLock()
@@ -311,27 +324,3 @@ class timerManager {
         }
     }
 }
-
-// //pauses all timers that are currently running
-// function pauseAll () {
-//     for (const i of timersSet) {
-//         i.pauseTimer()
-//     }
-// }
-
-// //resumes all paused timers
-// function resumeAll () {
-//     for (const i of timersSet) {
-//         if (i.state === "paused") {
-//             i.startTimer()
-//         }
-//     }
-// }
-
-// //resets all timers
-// function resetAll () {
-//     for (const i of timersSet) {
-//         i.resetTimer()
-//     }
-// }
-
