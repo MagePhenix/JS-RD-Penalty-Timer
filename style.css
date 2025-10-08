@@ -154,8 +154,8 @@ button:disabled.resetBtn, button:disabled{
     border: 3px rgb(75, 75, 75) solid;
     background-color: rgba(48, 48, 48, 0.9);
     border-radius: 15px;
-    width: clamp(250px, 80vw, 400px);
-    height: clamp(490px, 85dvh, 700px);
+    width: min(100%, 400px);
+    height: 85%;
     padding: 15px;
 
     flex-direction: column;
@@ -178,11 +178,10 @@ button:disabled.resetBtn, button:disabled{
     position: absolute;
     left: 0%;
     top: 0%;
-    width: 100vw;
-    min-width: 327.3px;
+    width: max(327.3px, 100vw);
     height: clamp(635px, 100dvh, 800px);
     margin: 0;
-    padding: 10px 10vw 10px 10vw;
+    padding: 10px 10px 10px 10px;
     box-sizing: border-box;
 
     /* border: 5px red solid; */
