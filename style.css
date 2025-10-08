@@ -9,13 +9,19 @@
 
     --textColor: white;
     --textNorm: 100%;
+
+    box-sizing: border-box;
 }
 
 body {
+    position: relative;
     background: var(--bgColor);
     color: var(--fgColor);
-    min-height: fit-content;
-    min-width: fit-content;
+    height: clamp(675px, 100dvh, 800px);
+    width: 100%;
+    margin-inline: auto;
+    box-sizing: border-box;
+    margin: 0;
 }
 
 table tbody th td {
@@ -23,13 +29,14 @@ table tbody th td {
 }
 
 button {
-    color: var((var(--fgColor)));
+    color: var(--fgColor);
     border-radius: 10px;
     font-weight: 200;
     font-size: var(--textNorm);
     height: 60px;
     width: 60px;
     padding-top: 4px;
+    border-width: 2px;
 }
 
 .material-symbols-outlined {
@@ -42,18 +49,29 @@ button {
     'opsz' 40
 }
 
-.flexgTimerSet {
+.flexg1Team, .flexg2Team {
+    box-sizing: border-box;
+    padding: 10px;
     background-color: none;
     display: grid;
     place-items: center;
     grid-template-columns: auto minmax(7.5rem, 12rem) max-content max-content;
     column-gap: min(1rem, 2vw);
-    row-gap: .5rem;
     margin-inline: auto;
     margin-bottom: .5rem;
-    height: clamp(270px, 43dvh, 350px);
     width: fit-content;
     overflow: auto;
+}
+
+.flexg2Team {
+    height: 43%;
+    row-gap: .5rem;
+    border: 2px white solid;
+    border-radius: 10px;
+}
+
+.flexg1Team {
+    height: 85%;
 }
 
 .flexb {
@@ -68,7 +86,6 @@ button {
     color: var(--resetDisplayColor);
     border-color: var(--resetDisplayColor);
     background-color: var(--bgColor);
-    /* width: clamp(7.5rem, 30vw, 12rem); */
     width: 100%;
     height: 45px;
     padding: 5px;
@@ -165,21 +182,21 @@ button:disabled.resetBtn, button:disabled{
 
     pointer-events: all;
     visibility: hidden;
-
 }
 
 #extraButtons {
     margin-top: auto;
     pointer-events: all;
+    box-sizing: border-box;
     width: clamp(250px, 80vw, 400px);
 }
 
 #centerer {
     position: absolute;
-    left: 0%;
-    top: 0%;
-    width: max(327.3px, 100vw);
-    height: clamp(635px, 100dvh, 800px);
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 10px 10px 10px 10px;
     box-sizing: border-box;

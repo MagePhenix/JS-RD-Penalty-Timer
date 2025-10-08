@@ -84,13 +84,16 @@ function toggleSettings() {
 //Show or hide the second team
 function showTeam() {
 
+    team1 = document.getElementById("team1")
     team2 = document.getElementById("team2")
 
     if (document.getElementById("showTeam2").checked) {
         team2.style.display = "grid"
+        team1.className = "flexg2Team"
     } 
     else {
         team2.style.display = "none"
+        team1.className = "flexg1Team"
     }
 }
 
