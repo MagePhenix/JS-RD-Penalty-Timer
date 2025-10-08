@@ -73,11 +73,11 @@ function toggleSettings() {
 
     menu = document.getElementById("settingsMenu")
 
-    if (menu.style.visibility === "visible") {
-        menu.style.visibility = "hidden"
+    if (menu.style.display != "flex") {
+        menu.style.display = "flex"
     }
     else {
-        menu.style.visibility = "visible"
+        menu.style.display = "none"
     }
 }
 
