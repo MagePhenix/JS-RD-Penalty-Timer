@@ -52,13 +52,13 @@ function fillGrid(grid, labels) {
     for (let i = 0; i < labels.length; i++) {
 
         //create unique ID
-        id = `${grid.id}-${timerLabels[i]}`
+        id = `${grid.id}-${labels[i]}`
 
         //store ID in set
         timerIDs.add(id)
 
         //creates all the elements
-        grid.innerHTML += `<p class="timerLbl">${timerLabels[i]}:</p>`
+        grid.innerHTML += `<p class="timerLbl">${labels[i]}:</p>`
         grid.innerHTML += `<button id="${id} Display" class="countDisplay" disabled="True">00:00.00</button>`
         grid.innerHTML += `<button id="${id} Start" class="startBtn">${iconStart}</button>`
         grid.innerHTML += `<button id="${id} Reset" class="resetBtn" disabled>${iconReset}</button>`
@@ -120,7 +120,7 @@ function initialize() {
     document.getElementById("init1").remove()
 
     //fills in timer elements
-    fillGrid(document.getElementById("team1"), timerLabels)
+    fillGrid(document.getElementById("team1"), timerLabels.toReversed())
     fillGrid(document.getElementById("team2"), timerLabels)
 
     //creates the timer manager
