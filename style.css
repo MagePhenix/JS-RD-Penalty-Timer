@@ -51,7 +51,7 @@ button {
     row-gap: .5rem;
     margin-inline: auto;
     margin-bottom: .5rem;
-    height: clamp(270px, 43vh, 350px);
+    height: clamp(270px, 43dvh, 350px);
     width: fit-content;
     overflow: auto;
 }
@@ -155,7 +155,7 @@ button:disabled.resetBtn, button:disabled{
     background-color: rgba(48, 48, 48, 0.9);
     border-radius: 15px;
     width: clamp(250px, 80vw, 400px);
-    height: clamp(490px, 85vh, 700px);
+    height: clamp(490px, 85dvh, 700px);
     padding: 15px;
 
     flex-direction: column;
@@ -180,7 +180,7 @@ button:disabled.resetBtn, button:disabled{
     top: 0%;
     width: 100vw;
     min-width: 327.3px;
-    height: clamp(635px, 100vh, 800px);
+    height: clamp(635px, 100dvh, 800px);
     margin: 0;
     padding: 10px 10vw 10px 10vw;
     box-sizing: border-box;
