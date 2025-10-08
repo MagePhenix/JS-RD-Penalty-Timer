@@ -108,6 +108,12 @@ function setTeam2() {
     }
 }
 
+//Changes the border of target to passed color
+function changeBorderColor(color, target) {
+
+    target.style.borderColor = color
+}
+
 function initialize() {
 
     //removes html that calls initalizer
@@ -140,6 +146,8 @@ function initialize() {
     document.getElementById("settingsBtn").addEventListener("click", toggleSettings)
     document.getElementById("showTeam2").addEventListener("click", setTeam2)
     document.getElementById("showResetAll").addEventListener("click", setResetAll)
+    document.getElementById("team1ColorPicker").addEventListener("input", function () {changeBorderColor(this.value, document.getElementById("team1"))})
+    document.getElementById("team2ColorPicker").addEventListener("input", function () {changeBorderColor(this.value, document.getElementById("team2"))})
 
     //sync settings
     setTeam2()

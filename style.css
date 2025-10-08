@@ -80,7 +80,7 @@ button {
 .flexg2Team {
     height: 100%;
     row-gap: .5rem;
-    border: 2px white solid;
+    border: 4px white solid;
     border-radius: 10px;
 }
 
