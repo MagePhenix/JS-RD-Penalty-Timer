@@ -393,5 +393,7 @@ class timerManager {
         this.runningJammer.endTime = getTimeMS()
 
         newTimer.endTime = getTimeMS() + remainingTimeMS
+
+        this.runningJammer = newTimer
     }
 }
