@@ -64,9 +64,7 @@ button {
     /* border: 1px white solid; */
     /* border-radius: 5px; */
     margin-inline: auto;
-    max-width: clamp(200px, 80vw, 500px);
-    min-width: fit-content;
-    min-height: fit-content ;
+    width: clamp(327.3px, 80vw, 400px);
     justify-content: space-evenly;
 }
 
@@ -157,8 +155,8 @@ button:disabled.resetBtn, button:disabled{
 
 #settingsMenu {
     display: flex;
-    border: 3px gray solid;
-    background-color: rgba(47, 47, 47, 0.8);
+    border: 3px rgb(75, 75, 75) solid;
+    background-color: rgba(48, 48, 48, 0.9);
     border-radius: 15px;
     max-width: min(80vw, 400px);
     min-width: clamp(250px, 80vw, 400px);
@@ -173,6 +171,8 @@ button:disabled.resetBtn, button:disabled{
     box-sizing: border-box;
 
     pointer-events: all;
+    visibility: hidden;
+
 }
 
 #centerer {
@@ -182,19 +182,24 @@ button:disabled.resetBtn, button:disabled{
     width: 100vw;
     min-width: 327.3px;
     height: 100vh;
-    max-height: 900px;
+    max-height: 950px;
     margin: 0;
-    padding: 20px 10vw 10vh 10vw;
+    padding: 10px 10vw 10px 10vw;
     box-sizing: border-box;
 
     /* border: 5px red solid; */
 
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     
     pointer-events: none;
-    visibility: hidden;
+}
+
+#extraButtons {
+    margin-top: auto;
+    pointer-events: all;
 }
 
 .settingContainer {

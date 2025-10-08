@@ -70,14 +70,27 @@ function fillGrid(grid, labels) {
 //Opens and closes the settings menu
 function toggleSettings() {
 
-    
-    menu = document.getElementById("centerer")
+
+    menu = document.getElementById("settingsMenu")
 
     if (menu.style.visibility === "visible") {
         menu.style.visibility = "hidden"
     }
     else {
         menu.style.visibility = "visible"
+    }
+}
+
+//Show or hide the second team
+function showTeam() {
+
+    team2 = document.getElementById("team2")
+
+    if (document.getElementById("showTeam2").checked) {
+        team2.style.display = "grid"
+    } 
+    else {
+        team2.style.display = "none"
     }
 }
 
@@ -109,6 +122,10 @@ function initialize() {
     document.getElementById("pauseAll").addEventListener("click", timerController.pauseAll)
     document.getElementById("resetAll").addEventListener("click", timerController.resetAll)
     document.getElementById("settingsBtn").addEventListener("click", toggleSettings)
+    document.getElementById("showTeam2").addEventListener("click", showTeam)
+
+    //hides team 2
+    showTeam()
 
     //sets screen to stay on
     getWakeLock()
