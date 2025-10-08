@@ -14,7 +14,6 @@ const iconPauseAll = `<span class="material-symbols-outlined">pause</span>`
 
 const iconSettings = `<span class="material-symbols-outlined">settings</span>`
 
-
 //Returns the current time in MS
 function getTimeMS () {
     return new Date().getTime()
@@ -81,6 +80,18 @@ function toggleSettings() {
     }
 }
 
+//Shows/Hides Reset All
+function setResetAll() {
+    resetAllBtn = document.getElementById("resetAll")
+
+    if (document.getElementById("showResetAll").checked) {
+        resetAllBtn.style.display = "inline"
+    }
+    else {
+        resetAllBtn.style.display = "none"
+    }
+}
+
 //Show or hide the second team
 function showTeam() {
 
@@ -124,8 +135,11 @@ function initialize() {
     document.getElementById("resumeAll").addEventListener("click", timerController.resumeAll)
     document.getElementById("pauseAll").addEventListener("click", timerController.pauseAll)
     document.getElementById("resetAll").addEventListener("click", timerController.resetAll)
+
+    //sets up listeners for settings options
     document.getElementById("settingsBtn").addEventListener("click", toggleSettings)
     document.getElementById("showTeam2").addEventListener("click", showTeam)
+    document.getElementById("showResetAll").addEventListener("click", setResetAll)
 
     //hides team 2
     showTeam()
@@ -137,12 +151,14 @@ function initialize() {
 
 //handles timer management
 class Timer {
+
     constructor(timerID, manager) {
         this.timerInterval
         this.timeRemainingMS = startingTimeMS
         this.endTime
         this.state = "reset"
         this.manager = manager
+        this.isJammer = timerID.includes("Jammer")
 
         this.timerDisplay = document.getElementById(`${timerID} Display`)
         this.startBtn = document.getElementById(`${timerID} Start`)
@@ -154,6 +170,7 @@ class Timer {
         this.updateDisplay()
     }
 
+    //Calls the approiate method based on state
     handleStartPauseResume = () => {
         switch (this.state) {
             case "reset":
@@ -279,6 +296,8 @@ class timerManager {
         this.runningTimers = new Set()
         this.pausedTimers = new Set()
         this.timerInterval = null
+        this.runningJammer = null
+        this.autoJammerCheckbox = document.getElementById("autoJammer")
     }
 
     updateAll = () => {
@@ -293,6 +312,11 @@ class timerManager {
 
     addRunning = (timer) => {
 
+        //handles jammer handover
+        if (this.autoJammerCheckbox.checked) {
+            this.handleAutoJammer(timer)
+        }
+
         //creates a refresh interval if none is currently running
         if (this.runningTimers.size == 0) {
             this.timerInterval = setInterval (this.updateAll, timerRefreshMS)
@@ -303,6 +327,11 @@ class timerManager {
     }
 
     removeRunning = (timer) => {
+
+        //jammer timing removal
+        if (timer === this.runningJammer) {
+            this.runningJammer = null
+        }
 
         //removes timer from the update set 
         this.runningTimers.delete(timer)
@@ -344,5 +373,25 @@ class timerManager {
             //reset it
             i.resetTimer()
         }
+    }
+
+    handleAutoJammer = (newTimer) => {
+
+        //bail out if current timer isn't a jammer
+        if (!newTimer.isJammer) {
+            return
+        }
+
+        //if there is no running jammer add the current one and return
+        if (this.runningJammer == null) {
+            this.runningJammer = newTimer
+            return
+        }
+
+        let remainingTimeMS = startingTimeMS - this.runningJammer.timeRemainingMS
+
+        this.runningJammer.endTime = getTimeMS()
+
+        newTimer.endTime = getTimeMS() + remainingTimeMS
     }
 }

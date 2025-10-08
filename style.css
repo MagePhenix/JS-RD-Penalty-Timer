@@ -172,6 +172,7 @@ button:disabled.resetBtn, button:disabled{
 
 #resetAll {
     border-color: var(--resetColor);
+    display: none;
 }
 
 #settingsBtn {
