@@ -93,7 +93,7 @@ function setResetAll() {
 }
 
 //Show or hide the second team
-function showTeam() {
+function setTeam2() {
 
     team1 = document.getElementById("team1")
     team2 = document.getElementById("team2")
@@ -138,11 +138,12 @@ function initialize() {
 
     //sets up listeners for settings options
     document.getElementById("settingsBtn").addEventListener("click", toggleSettings)
-    document.getElementById("showTeam2").addEventListener("click", showTeam)
+    document.getElementById("showTeam2").addEventListener("click", setTeam2)
     document.getElementById("showResetAll").addEventListener("click", setResetAll)
 
-    //hides team 2
-    showTeam()
+    //sync settings
+    setTeam2()
+    setResetAll()
 
     //sets screen to stay on
     getWakeLock()
