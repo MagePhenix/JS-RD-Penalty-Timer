@@ -42,7 +42,7 @@ button {
     'opsz' 40
 }
 
-.flexg {
+.flexgTimerSet {
     background-color: none;
     display: grid;
     place-items: center;
@@ -51,11 +51,8 @@ button {
     row-gap: .5rem;
     margin-inline: auto;
     margin-bottom: .5rem;
-    min-width: fit-content;
-    max-width: fit-content;
-    min-height: 270px;
-    height: 40vh;
-    max-height: 350px;
+    height: clamp(270px, 43vh, 350px);
+    width: fit-content;
     overflow: auto;
 }
 
@@ -64,7 +61,6 @@ button {
     /* border: 1px white solid; */
     /* border-radius: 5px; */
     margin-inline: auto;
-    width: clamp(327.3px, 80vw, 400px);
     justify-content: space-evenly;
 }
 
@@ -158,11 +154,8 @@ button:disabled.resetBtn, button:disabled{
     border: 3px rgb(75, 75, 75) solid;
     background-color: rgba(48, 48, 48, 0.9);
     border-radius: 15px;
-    max-width: min(80vw, 400px);
-    min-width: clamp(250px, 80vw, 400px);
-    min-height: 490px;
-    max-height: 620px;
-    height: 75vh;
+    width: clamp(250px, 80vw, 400px);
+    height: clamp(490px, 85vh, 700px);
     padding: 15px;
 
     flex-direction: column;
@@ -175,14 +168,19 @@ button:disabled.resetBtn, button:disabled{
 
 }
 
+#extraButtons {
+    margin-top: auto;
+    pointer-events: all;
+    width: clamp(250px, 80vw, 400px);
+}
+
 #centerer {
     position: absolute;
     left: 0%;
     top: 0%;
     width: 100vw;
     min-width: 327.3px;
-    height: 100vh;
-    max-height: 950px;
+    height: clamp(635px, 100vh, 800px);
     margin: 0;
     padding: 10px 10vw 10px 10vw;
     box-sizing: border-box;
@@ -197,10 +195,7 @@ button:disabled.resetBtn, button:disabled{
     pointer-events: none;
 }
 
-#extraButtons {
-    margin-top: auto;
-    pointer-events: all;
-}
+
 
 .settingContainer {
     width: fit-content;
