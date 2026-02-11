@@ -22,7 +22,6 @@ const defaultConfig = {
             team2Color: "hsl(190, 87%, 24%)",
             autoJammer: true
         }
-var fullscreenState = false
 var config
 var settings
 var screenLock
@@ -40,20 +39,11 @@ async function getWakeLock() {
 //handles fullscreen requests
 function setFullscreen () {
 
-    //gets the fullscreen button
-    btn = document.getElementById("fullscreenBtn")
-
     //when in fullscreen
-    if (fullscreenState) {
+    if (document.fullscreenElement) {
 
         //exits fullscreen
         document.exitFullscreen()
-
-        //changes state
-        fullscreenState = false
-
-        //sets icon
-        btn.innerHTML = iconSetFullscreen
     }
     //when not fullscreen
     else
@@ -61,16 +51,33 @@ function setFullscreen () {
         //goes to fullscreen
         document.body.requestFullscreen()
 
-        //sets state
-        fullscreenState = true
-
-        //changes icon
-        btn.innerHTML = iconExitFullscreen
-
         //locks screen on
         getWakeLock()
     }
 
+}
+
+//updates things when document changes screen state
+function updateFullscreen () {
+
+    //When fullscreen
+    if (document.fullscreenElement) {
+
+        //set icon
+        document.getElementById("fullscreenBtn").innerHTML = iconExitFullscreen
+
+        //center aligned
+        document.getElementById("mainContainer").classList.add("fullHeight")
+    }
+    //When not fullscreen
+    else {
+
+        //set icon
+        document.getElementById("fullscreenBtn").innerHTML = iconSetFullscreen
+
+        //top aligned
+        document.getElementById("mainContainer").classList.remove("fullHeight")
+    }
 }
 
 //Takes a time in MS and returns a string in the format ##:##.## example 01:23.45
@@ -264,6 +271,9 @@ function initialize() {
     settings.autoJammer.addEventListener("click", function() {updateSettings(this, this.checked, function () {})})
     settings.team1Color.addEventListener("input", function() {updateSettings(this, this.value, changeBorderColor.bind(null, this.value, document.getElementById("team1")))})
     settings.team2Color.addEventListener("input", function() {updateSettings(this, this.value, changeBorderColor.bind(null, this.value, document.getElementById("team2")))})
+
+    //fullscreen event listener
+    document.addEventListener("fullscreenchange", updateFullscreen)
 
     //loads settings
     loadSettings()
