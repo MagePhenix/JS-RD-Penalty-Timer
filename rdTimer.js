@@ -40,18 +40,35 @@ async function getWakeLock() {
 //handles fullscreen requests
 function setFullscreen () {
 
+    //gets the fullscreen button
     btn = document.getElementById("fullscreenBtn")
 
+    //when in fullscreen
     if (fullscreenState) {
+
+        //exits fullscreen
         document.exitFullscreen()
+
+        //changes state
         fullscreenState = false
+
+        //sets icon
         btn.innerHTML = iconSetFullscreen
     }
+    //when not fullscreen
     else
     {
+        //goes to fullscreen
         document.body.requestFullscreen()
+
+        //sets state
         fullscreenState = true
+
+        //changes icon
         btn.innerHTML = iconExitFullscreen
+
+        //locks screen on
+        getWakeLock()
     }
 
 }
@@ -250,9 +267,6 @@ function initialize() {
 
     //loads settings
     loadSettings()
-
-    //sets screen to stay on
-    getWakeLock()
 
 }
 
