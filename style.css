@@ -69,7 +69,7 @@ button {
     padding: 10px;
     display: grid;
     place-items: center;
-    grid-template-columns: max-content auto max-content max-content;
+    grid-template-columns: max-content max-content auto max-content;
     column-gap: 3%;
     margin-inline: auto;
     margin-bottom: .5rem;

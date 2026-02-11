@@ -58,10 +58,10 @@ function fillGrid(grid, labels) {
         timerIDs.add(id)
 
         //creates all the elements
-        grid.innerHTML += `<p class="timerLbl">${labels[i]}:</p>`
-        grid.innerHTML += `<button id="${id} Display" class="countDisplay" disabled="True">00:00.00</button>`
         grid.innerHTML += `<button id="${id} Start" class="startBtn">${iconStart}</button>`
         grid.innerHTML += `<button id="${id} Reset" class="resetBtn" disabled>${iconReset}</button>`
+        grid.innerHTML += `<button id="${id} Display" class="countDisplay" disabled="True">00:00.00</button>`
+        grid.innerHTML += `<p class="timerLbl">${labels[i]}</p>`
 
     }
 }
