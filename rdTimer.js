@@ -13,6 +13,8 @@ const iconResumeAll = `<span class="material-symbols-outlined">resume</span>`
 const iconPauseAll = `<span class="material-symbols-outlined">pause</span>`
 
 const iconSettings = `<span class="material-symbols-outlined">settings</span>`
+var config
+var settings
 
 //Returns the current time in MS
 function getTimeMS () {
@@ -45,6 +47,60 @@ function formatTime (timeMS) {
     return `${sign}${secs}.${millis}\u2800`
     // return `${sign}${mins}:${secs}.${millis}\u2800`
 }
+
+//Handles loading settings from config or sets defaults
+function loadSettings() {
+
+    //trys to load config from local storage
+    config = localStorage.getItem("config")
+
+    //when loading fails
+    if (!config) {
+
+        //sets default values
+        config = {
+            showTeam2: true,
+            showResetAll: true,
+            team1Color: "hsl(0, 0%, 100%)",
+            team2Color: "hsl(190, 87%, 24%)",
+        }
+    }
+    else {
+        //sets values from storage
+        config = JSON.parse(config)
+    }
+
+    //syncs show team 2
+    settings.showTeam2.checked = config.showTeam2
+    setTeam2()
+
+    //syncs reset button
+    settings.showResetAll.checked = config.showResetAll
+    setResetAll()
+
+    //sets border colors
+    changeBorderColor(config.team1Color, document.getElementById("team1"))
+    changeBorderColor(config.team2Color, document.getElementById("team2"))
+
+}
+
+//Saves all settings to local storage
+function storeConfig() {
+
+    localStorage.setItem("config", JSON.stringify(config))
+
+}
+
+//handles settings updates
+function updateSettings(setting, value, updateFunction) {
+
+    config[setting.id] = value
+
+    updateFunction()
+
+    storeConfig()
+}
+
 //Fills the passed table with rows labled by the passed info
 function fillGrid(grid, labels) {
 
@@ -67,7 +123,7 @@ function fillGrid(grid, labels) {
 }
 
 //Opens and closes the settings menu
-function toggleSettings() {
+function toggleSettingsPage() {
 
 
     menu = document.getElementById("settingsMenu")
@@ -84,12 +140,15 @@ function toggleSettings() {
 function setResetAll() {
     resetAllBtn = document.getElementById("resetAll")
 
-    if (document.getElementById("showResetAll").checked) {
+    if (settings.showResetAll.checked) {
         resetAllBtn.style.display = "inline"
     }
     else {
         resetAllBtn.style.display = "none"
     }
+
+    config.showResetAll = settings.showResetAll.checked
+    storeConfig()
 }
 
 //Show or hide the second team
@@ -98,7 +157,7 @@ function setTeam2() {
     team1 = document.getElementById("team1")
     team2 = document.getElementById("team2")
 
-    if (document.getElementById("showTeam2").checked) {
+    if (settings.showTeam2.checked) {
         team2.style.display = "grid"
         team1.className = "flexg2Team"
     } 
@@ -106,6 +165,7 @@ function setTeam2() {
         team2.style.display = "none"
         team1.className = "flexg1Team"
     }
+
 }
 
 //Changes the border of target to passed color
@@ -131,6 +191,14 @@ function initialize() {
         timersSet.add(new Timer(i , timerController))
     }
 
+    //creates a dictionary of settings
+    settings = {
+        showTeam2: document.getElementById("showTeam2"),
+        showResetAll: document.getElementById("showResetAll"),
+        team1Color: document.getElementById("team1Color"),
+        team2Color: document.getElementById("team2Color")
+    }
+
     //adds icons to custom buttons
     document.getElementById("resumeAll").innerHTML = iconResumeAll
     document.getElementById("pauseAll").innerHTML = iconPauseAll
@@ -143,15 +211,14 @@ function initialize() {
     document.getElementById("resetAll").addEventListener("click", timerController.resetAll)
 
     //sets up listeners for settings options
-    document.getElementById("settingsBtn").addEventListener("click", toggleSettings)
-    document.getElementById("showTeam2").addEventListener("click", setTeam2)
-    document.getElementById("showResetAll").addEventListener("click", setResetAll)
-    document.getElementById("team1ColorPicker").addEventListener("input", function () {changeBorderColor(this.value, document.getElementById("team1"))})
-    document.getElementById("team2ColorPicker").addEventListener("input", function () {changeBorderColor(this.value, document.getElementById("team2"))})
+    document.getElementById("settingsBtn").addEventListener("click", toggleSettingsPage)
+    settings.showTeam2.addEventListener("click", function () {updateSettings(this, this.checked, setTeam2)})
+    settings.showResetAll.addEventListener("click", function () {updateSettings(this, this.checked, setResetAll)})
+    settings.team1Color.addEventListener("input", function() {updateSettings(this, this.value, changeBorderColor.bind(null, this.value, document.getElementById("team1")))})
+    settings.team2Color.addEventListener("input", function() {updateSettings(this, this.value, changeBorderColor.bind(null, this.value, document.getElementById("team2")))})
 
-    //sync settings
-    setTeam2()
-    setResetAll()
+    //loads settings
+    loadSettings()
 
     //sets screen to stay on
     getWakeLock()
