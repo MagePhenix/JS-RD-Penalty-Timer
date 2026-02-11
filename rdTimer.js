@@ -13,6 +13,13 @@ const iconResumeAll = `<span class="material-symbols-outlined">resume</span>`
 const iconPauseAll = `<span class="material-symbols-outlined">pause</span>`
 
 const iconSettings = `<span class="material-symbols-outlined">settings</span>`
+const defaultConfig = {
+            showTeam2: true,
+            showResetAll: true,
+            team1Color: "hsl(0, 0%, 100%)",
+            team2Color: "hsl(190, 87%, 24%)",
+            autoJammer: true
+        }
 var config
 var settings
 
@@ -58,12 +65,7 @@ function loadSettings() {
     if (!config) {
 
         //sets default values
-        config = {
-            showTeam2: true,
-            showResetAll: true,
-            team1Color: "hsl(0, 0%, 100%)",
-            team2Color: "hsl(190, 87%, 24%)",
-        }
+        config = defaultConfig
     }
     else {
         //sets values from storage
@@ -77,6 +79,9 @@ function loadSettings() {
     //syncs reset button
     settings.showResetAll.checked = config.showResetAll
     setResetAll()
+
+    //syncs auto jammer
+    settings.autoJammer.checked = config.autoJammer
 
     //sets border colors
     changeBorderColor(config.team1Color, document.getElementById("team1"))
@@ -183,20 +188,20 @@ function initialize() {
     fillGrid(document.getElementById("team1"), timerLabels.toReversed())
     fillGrid(document.getElementById("team2"), timerLabels)
 
+    //creates a dictionary of settings
+    settings = {
+        showTeam2: document.getElementById("showTeam2"),
+        showResetAll: document.getElementById("showResetAll"),
+        team1Color: document.getElementById("team1Color"),
+        team2Color: document.getElementById("team2Color"),
+        autoJammer: document.getElementById("autoJammer")
+    }
     //creates the timer manager
     timerController = new timerManager()
 
     //creates a timer for each item in the table
     for(const i of timerIDs) {
         timersSet.add(new Timer(i , timerController))
-    }
-
-    //creates a dictionary of settings
-    settings = {
-        showTeam2: document.getElementById("showTeam2"),
-        showResetAll: document.getElementById("showResetAll"),
-        team1Color: document.getElementById("team1Color"),
-        team2Color: document.getElementById("team2Color")
     }
 
     //adds icons to custom buttons
@@ -214,6 +219,7 @@ function initialize() {
     document.getElementById("settingsBtn").addEventListener("click", toggleSettingsPage)
     settings.showTeam2.addEventListener("click", function () {updateSettings(this, this.checked, setTeam2)})
     settings.showResetAll.addEventListener("click", function () {updateSettings(this, this.checked, setResetAll)})
+    settings.autoJammer.addEventListener("click", function() {updateSettings(this, this.checked, function () {})})
     settings.team1Color.addEventListener("input", function() {updateSettings(this, this.value, changeBorderColor.bind(null, this.value, document.getElementById("team1")))})
     settings.team2Color.addEventListener("input", function() {updateSettings(this, this.value, changeBorderColor.bind(null, this.value, document.getElementById("team2")))})
 
@@ -373,7 +379,7 @@ class timerManager {
         this.pausedTimers = new Set()
         this.timerInterval = null
         this.runningJammer = null
-        this.autoJammerCheckbox = document.getElementById("autoJammer")
+        this.autoJammerCheckbox = settings.autoJammer
     }
 
     updateAll = () => {
