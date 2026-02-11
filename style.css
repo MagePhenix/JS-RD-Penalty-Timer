@@ -1,11 +1,12 @@
 :root {
-    --bgColor: black;
+    --bgColor: oklch(0% 0% 0deg);
     --fgColor: rgb(204, 204, 204);
     --startColor: rgb(56, 152, 56);
     --pauseColor: rgb(255, 216, 91);
     --resetColor: rgb(215, 47, 47);
     --resetDisplayColor: rgb(100, 100, 100);
     --standTimeColor: rgb(50, 255, 193);
+    --fullscreencolor: oklch(from var(--bgColor) calc(l + .3) c h);
 
     --textColor: white;
     --textNorm: 100%;
@@ -147,6 +148,18 @@ button {
     border-color: var(--fgColor);
 }
 
+.fullscreenBtn {
+    color: var(--fullscreencolor);
+    background-color: var(--bgColor);
+    border-color: var(--fullscreencolor);
+    border-radius: 0px;
+    height: 30px;
+    width: 30px;
+    position: fixed;
+    bottom: 3px;
+    right: 3px;
+}
+
 button:disabled.resetBtn, button:disabled{
     color: rgb(70, 70, 70);
     background-color: black;
@@ -206,6 +219,10 @@ button:disabled.resetBtn, button:disabled{
     pointer-events: all;
     box-sizing: border-box;
     width: 100%;
+}
+
+#fullscreenIcon {
+    font-size: 18px;
 }
 
 .settingContainer {

@@ -13,6 +13,8 @@ const iconResumeAll = `<span class="material-symbols-outlined">resume</span>`
 const iconPauseAll = `<span class="material-symbols-outlined">pause</span>`
 
 const iconSettings = `<span class="material-symbols-outlined">settings</span>`
+const iconSetFullscreen = `<span id="fullscreenIcon" class="material-symbols-outlined">open_in_full</span>`
+const iconExitFullscreen = `<span id="fullscreenIcon" class="material-symbols-outlined">close_fullscreen</span>`
 const defaultConfig = {
             showTeam2: true,
             showResetAll: true,
@@ -20,8 +22,10 @@ const defaultConfig = {
             team2Color: "hsl(190, 87%, 24%)",
             autoJammer: true
         }
+var fullscreenState = false
 var config
 var settings
+var screenLock
 
 //Returns the current time in MS
 function getTimeMS () {
@@ -31,6 +35,25 @@ function getTimeMS () {
 //Prevents devices from sleeping
 async function getWakeLock() {
     return await navigator.wakeLock.request("screen")
+}
+
+//handles fullscreen requests
+function setFullscreen () {
+
+    btn = document.getElementById("fullscreenBtn")
+
+    if (fullscreenState) {
+        document.exitFullscreen()
+        fullscreenState = false
+        btn.innerHTML = iconSetFullscreen
+    }
+    else
+    {
+        document.body.requestFullscreen()
+        fullscreenState = true
+        btn.innerHTML = iconExitFullscreen
+    }
+
 }
 
 //Takes a time in MS and returns a string in the format ##:##.## example 01:23.45
@@ -209,11 +232,13 @@ function initialize() {
     document.getElementById("pauseAll").innerHTML = iconPauseAll
     document.getElementById("resetAll").innerHTML = iconResetAll
     document.getElementById("settingsBtn").innerHTML = iconSettings
+    document.getElementById("fullscreenBtn").innerHTML = iconSetFullscreen
 
     //sets up listeners on extra buttons
     document.getElementById("resumeAll").addEventListener("click", timerController.resumeAll)
     document.getElementById("pauseAll").addEventListener("click", timerController.pauseAll)
     document.getElementById("resetAll").addEventListener("click", timerController.resetAll)
+    document.getElementById("fullscreenBtn").addEventListener("click", setFullscreen)
 
     //sets up listeners for settings options
     document.getElementById("settingsBtn").addEventListener("click", toggleSettingsPage)
