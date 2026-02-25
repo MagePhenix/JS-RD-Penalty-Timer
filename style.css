@@ -33,7 +33,7 @@ button {
     height: 60px;
     width: 60px;
     padding-top: 4px;
-    border-width: 2px;
+    border: 2px solid;
 }
 
 .container {
