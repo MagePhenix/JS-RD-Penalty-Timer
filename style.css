@@ -233,3 +233,10 @@ button:disabled.resetBtn, button:disabled{
     width: fit-content;
     /* background-color: red; */
 }
+
+#qrCode {
+    margin: .5rem;
+    max-width: 100% ;
+    height: 100%;
+
+}
